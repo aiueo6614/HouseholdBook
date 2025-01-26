@@ -31,7 +31,7 @@ function App() {
     const getData = () => {
         axios.get('http://localhost:8001/api/transactions')
             .then(function(response) {
-                console.log(response);
+                setData(response.data); // 取得したデータを状態に保存
             })
             .catch(function(error) {
                 console.log(error);
@@ -54,18 +54,8 @@ function App() {
                 ]}
             />
             <button onClick={sendData}>データ送信</button>
-            <button onClick={getData}>データ取得</button>
-            <div>
-                {data.map((item, index) => (
-                    <div key={index}>
-                        <p>日付: {item.date}</p>
-                        <p>カテゴリー: {item.category}</p>
-                        <p>説明: {item.description}</p>
-                        <p>金額: {item.amount}</p>
-                        <p>ID: {item.id}</p>
-                    </div>
-                ))}
-            </div>
+            {data ? <div>{data.category}</div> : <button onClick={getData}>データ取得</button>}
+
         </div>
     );
 }

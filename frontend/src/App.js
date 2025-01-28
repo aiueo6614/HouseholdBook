@@ -28,6 +28,16 @@ function App() {
             });
     };
     //sqlデータ取得
+    //sqlデータ取得
+    const getData = () => {
+        axios.get('http://localhost:8001/api/transactions')
+            .then(function(response) {
+                console.log(response);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    };
     return (
         <div className={"calendar"}>
             <FullCalendar
@@ -45,6 +55,7 @@ function App() {
                 ]}
             />
             <button onClick={sendData}>データ送信</button>
+            <button onClick={getData}>データ取得</button>
         </div>
     );
 }

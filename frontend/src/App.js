@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -7,10 +7,13 @@ import jaLocale from '@fullcalendar/core/locales/ja';
 import './App.css';
 
 function App() {
+    const [transactions, setTransactions] = useState([]);
+    const [filteredTransactions,setFilteredTransactions] = useState([]);
+    const [categoryFilter,setCategoryFilter] =useState('');
+    //カレンダーイベントテストデータ
     let year = '2025';
     let month = '01';
     let day = ['01', '02', '03'];
-
     let time = [year + '-' + month + '-' + day[0], year + '-' + month + '-' + day[1], year + '-' + month + '-' + day[2]];
     //sqlデータ送信テストデータ
     const sendData = () => {
@@ -20,25 +23,51 @@ function App() {
             description: 'puttyo',
             amount: 150
         })
-            .then(function(response) {
-                console.log(response);
-            })
-            .catch(function(error) {
-                console.log(error);
-            });
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
     };
-    //sqlデータ取得
     //sqlデータ取得
     const getData = () => {
         axios.get('http://localhost:8001/api/transactions')
-            .then(function(response) {
-                console.log(response);
+            .then(response => {
+                console.log(response.data);
+                setTransactions(response.data);
             })
-            .catch(function(error) {
-                console.log(error);
-            });
+            .catch(error => console.log(error));
     };
+    const handleFilterChange = (event) => {
+        const selectedCategory = event.target.value;
+        setCategoryFilter(selectedCategory);
+        if(selectedCategory === 'all'){
+            //全データを表示
+            setFilteredTransactions(transactions);
+    }else{
+        //選択されたカテゴリーのみ表示
+            const filteredData = transactions.filter(tx => tx.category === selectedCategory);
+        setFilteredTransactions(filteredData);
+        }
+    };
+
     return (
+        <div>
+            <div className={"header"}>
+                <button><a href={""}>ホーム</a></button>
+                <select name={"月選択"} className={"month"}>
+                    <option value={"1"}>1月</option>
+                    <option value={"2"}>2月</option>
+                    <option value={"3"}>3月</option>
+                    <option value={"4"}>4月</option>
+                    <option value={"5"}>5月</option>
+                    <option value={"6"}>6月</option>
+                    <option value={"7"}>7月</option>
+                    <option value={"8"}>8月</option>
+                    <option value={"9"}>9月</option>
+                    <option value={"10"}>10月</option>
+                    <option value={"11"}>11月</option>
+                    <option value={"12"}>12月</option>
+                </select>
+                <button><a href={""}>年間</a></button>
+            </div>
         <div className={"calendar"}>
             <FullCalendar
                 plugins={[dayGridPlugin, listPlugin]}
@@ -56,6 +85,35 @@ function App() {
             />
             <button onClick={sendData}>データ送信</button>
             <button onClick={getData}>データ取得</button>
+            {/*取得したテストデータ表示*/}
+            <div>
+                <h2>取得したデータ</h2>
+                <ul>
+                    {transactions.map((tx, index) => (
+                        <li key={index}>{tx.date} - {tx.category} - {tx.description} - {tx.amount}円</li>
+                    ))}
+                </ul>
+            </div>
+            <div>
+                <h2>取得したデータのカテゴリー別け</h2>
+
+                {/* フィルタ用のドロップダウン */}
+                <label htmlFor="categoryFilter">カテゴリーで絞り込み:</label>
+                <select id="categoryFilter" value={categoryFilter} onChange={handleFilterChange}>
+                    <option value="all">すべて</option>
+                    <option value="食費">食費</option>
+                    <option value="交通費">交通費</option>
+                    <option value="娯楽">娯楽</option>
+                    {/* 必要に応じてカテゴリを追加 */}
+                </select>
+
+                <ul>
+                    {filteredTransactions.map((tx, index) => (
+                        <li key={index}>{tx.date} - {tx.category} - {tx.description} - {tx.amount}円</li>
+                    ))}
+                </ul>
+            </div>
+        </div>
         </div>
     );
 }

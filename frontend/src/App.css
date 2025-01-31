@@ -1,4 +1,72 @@
-.small-calendar{
-  max-width: 10px;
-  margin: 0 auto;
+body{
+    background-color: #fff9ea;
+}
+button.save{
+    position: fixed;
+    right: 20px;
+    top: 10px;
+    z-index: 1001;
+    background-color: #e6e6e6;
+    border: 1px solid black;
+    color: black;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    width: 70px;
+    height: 38px;
+}
+div.SecondaryHeader{
+    background-color: #ff9503;
+    display: flex;
+    justify-content: center;
+}
+{/*左三角形*/}
+div.PreviousMonth {
+    position: relative;
+    background: white;
+    height: calc(tan(60deg) * 50px / 2);
+    width: 47px;
+    clip-path: polygon(0 50%, 100% 0, 100% 100%);
+    margin: 0 100px
+}
+/* 三角形の中をくり抜く */
+div.PreviousMonth::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    height: 90%;
+    background: #ff9503; /* 背景の色を指定（透明にする場合はtransparent） */
+    transform: translate(-50%, -50%) rotate(0deg);
+    clip-path: polygon(0 50%, 100% 0, 100% 100%);
+}
+{/*右三角形*/}
+div.NextMonth {
+    position: relative;
+    background: white;
+    height: calc(tan(60deg) * 50px / 2);
+    width: 47px;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    margin: 0 100px;
+}
+/* 三角形の中をくり抜く */
+div.NextMonth::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    height: 90%;
+    background: #ff9503; /* 背景の色を指定（透明にする場合はtransparent） */
+    transform: translate(-50%, -50%) rotate(0deg);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+{/*カレンダー日付*/}
+.fc-daygrid-day {
+    background-color: white;
+}
+{/*カレンダー曜日*/}
+.fc-col-header-cell {
+    background-color: white;
 }

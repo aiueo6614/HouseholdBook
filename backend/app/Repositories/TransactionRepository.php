@@ -15,4 +15,9 @@ class TransactionRepository implements TransactionRepositoryInterface
     {
         return Transaction::create($data);
     }
+
+    public function find(int $id): Transaction
+    {
+        return Transaction::find($id);
+    }
 }

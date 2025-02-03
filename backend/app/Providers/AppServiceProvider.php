@@ -31,6 +31,12 @@ class AppServiceProvider extends ServiceProvider
                 return new CreateTransactionUsecase($app->make(TransactionRepositoryInterface::class));
             }
         );
+
+        $this->app->bind(CreateTransactionUsecase::class,
+            function($app) {
+                return new showTransactionUsecase($app->make(TransactionRepositoryInterface::class));
+            }
+        );
     }
 
     /**

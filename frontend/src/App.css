@@ -13,12 +13,21 @@ button.save{
     font: inherit;
     cursor: pointer;
     width: 70px;
-    height: 38px;
+    height: 37px;
 }
 div.SecondaryHeader{
     background-color: #ff9503;
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+div.CalendarValue{
+    margin:0 20px;
+    font-size: 40px;
+    color:white;
+}
+div.PreviousMonth, div.NextMonth{
+    margin: 0 90px;
 }
 {/*左三角形*/}
 div.PreviousMonth {
@@ -27,7 +36,6 @@ div.PreviousMonth {
     height: calc(tan(60deg) * 50px / 2);
     width: 47px;
     clip-path: polygon(0 50%, 100% 0, 100% 100%);
-    margin: 0 100px
 }
 /* 三角形の中をくり抜く */
 div.PreviousMonth::before {
@@ -48,7 +56,6 @@ div.NextMonth {
     height: calc(tan(60deg) * 50px / 2);
     width: 47px;
     clip-path: polygon(0 0, 100% 50%, 0 100%);
-    margin: 0 100px;
 }
 /* 三角形の中をくり抜く */
 div.NextMonth::before {
@@ -70,3 +77,4 @@ div.NextMonth::before {
 .fc-col-header-cell {
     background-color: white;
 }
+

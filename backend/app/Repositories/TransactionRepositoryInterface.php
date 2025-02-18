@@ -8,4 +8,5 @@ interface TransactionRepositoryInterface
 {
     public function getAll();
     public function create(array $data): Transaction;
+    public function find(int $id): Transaction;
 }

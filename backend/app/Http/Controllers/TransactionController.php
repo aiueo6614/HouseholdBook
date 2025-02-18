@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TransactionRequest;
 use App\UseCase\Transaction\GetTransactionsUseCase;
 use App\UseCase\Transaction\CreateTransactionUsecase;
+use App\UseCase\Transaction\ShowTransactionUseCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -13,14 +14,17 @@ class TransactionController extends Controller
 {
     private $getTransactionsUseCase;
     private $createTransactionUseCase;
+    private $showTransactionUseCase;
 
     public function __construct(
         GetTransactionsUseCase $getTransactionsUseCase,
-        CreateTransactionUsecase $createTransactionUseCase
+        CreateTransactionUsecase $createTransactionUseCase,
+        ShowTransactionUseCase $showTransactionUseCase,
     )
     {
         $this->getTransactionsUseCase = $getTransactionsUseCase;
         $this->createTransactionUseCase = $createTransactionUseCase;
+        $this->showTransactionUseCase = $showTransactionUseCase;
     }
 
     /**
@@ -44,9 +48,10 @@ class TransactionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id): JsonResponse
     {
-        //
+        $transaction = $this->showTransactionUseCase->execute($id);
+        return new JsonResponse($transaction, 200);
     }
 
     /**

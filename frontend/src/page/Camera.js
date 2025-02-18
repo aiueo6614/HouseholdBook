@@ -61,4 +61,5 @@ const CameraScreen = () => {
     );
 };
 
+
 export default CameraScreen;

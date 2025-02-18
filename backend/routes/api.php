@@ -10,6 +10,7 @@ Route::group(['prefix' => 'transactions'], function () {
     Route::post('/', [TransactionController::class, 'store']);
     Route::get('/{id}', [TransactionController::class, 'show']);
     Route::put('/', [TransactionController::class, 'update']);
+    Route::delete('/{id}', [TransactionController::class, 'delete']);
 });
 
 Route::group(['prefix' => 'drive'], function () {

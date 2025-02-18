@@ -8,6 +8,7 @@ use App\UseCase\Transaction\GetTransactionsUseCase;
 use App\UseCase\Transaction\CreateTransactionUseCase;
 use App\UseCase\Transaction\ShowTransactionUseCase;
 use App\UseCase\Transaction\UpdateTransactionUseCase;
+use App\UseCase\Transaction\DeleteTransactionUseCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -18,18 +19,21 @@ class TransactionController extends Controller
     private $createTransactionUseCase;
     private $showTransactionUseCase;
     private $updateTransactionUseCase;
+    private $deleteTransactionUseCase;
 
     public function __construct(
         GetTransactionsUseCase   $getTransactionsUseCase,
         CreateTransactionUseCase $createTransactionUseCase,
         ShowTransactionUseCase   $showTransactionUseCase,
-        UpdateTransactionUseCase $updateTransactionUseCase
+        UpdateTransactionUseCase $updateTransactionUseCase,
+        DeleteTransactionUseCase $deleteTransactionUseCase
     )
     {
         $this->getTransactionsUseCase = $getTransactionsUseCase;
         $this->createTransactionUseCase = $createTransactionUseCase;
         $this->showTransactionUseCase = $showTransactionUseCase;
         $this->updateTransactionUseCase = $updateTransactionUseCase;
+        $this->deleteTransactionUseCase = $deleteTransactionUseCase;
     }
 
     /**
@@ -71,8 +75,9 @@ class TransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function delete(string $id)
+    public function delete($id): JsonResponse
     {
-
+        $this->deleteTransactionUseCase->execute($id);
+        return new JsonResponse(null, 204);
     }
 }

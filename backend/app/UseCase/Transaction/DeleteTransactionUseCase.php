@@ -1,12 +1,10 @@
 <?php
 
-/*
 namespace App\UseCase\Transaction;
 
 use App\Repositories\TransactionRepositoryInterface;
-use App\Models\Transaction;
 
-class DestroyTransactionsUseCase
+class DeleteTransactionUseCase
 {
     private $transactionRepository;
 
@@ -15,10 +13,8 @@ class DestroyTransactionsUseCase
         $this->transactionRepository = $transactionRepository;
     }
 
-    public function execute(array $id)
+    public function execute(int $id)
     {
-        return $this->transactionRepository->destroy($id);
+        $this->transactionRepository->delete($id);
     }
 }
-*/
-

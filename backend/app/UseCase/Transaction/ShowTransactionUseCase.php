@@ -13,7 +13,7 @@ class  ShowTransactionUseCase
         $this->transactionRepository = $transactionRepository;
     }
 
-    public function execute(array $id)
+    public function execute($id)
     {
         return $this->transactionRepository->find($id);
     }

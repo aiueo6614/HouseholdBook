@@ -62,17 +62,17 @@ class TransactionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(TransactionRequest $request)
+    public function update(Request $request): JsonResponse
     {
-        $transactions = $this->updateTransactionUseCase->execute([$request->all()]);
+        $transactions = $this->updateTransactionUseCase->execute($request->all());
         return new JsonResponse($transactions, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
-        //
+
     }
 }

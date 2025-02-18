@@ -9,4 +9,5 @@ interface TransactionRepositoryInterface
     public function getAll();
     public function create(array $data): Transaction;
     public function find(int $id): Transaction;
+    public function update(array $data): Transaction;
 }

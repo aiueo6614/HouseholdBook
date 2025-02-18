@@ -1,11 +1,10 @@
 <?php
 
-/*
 namespace App\UseCase\Transaction;
 
 use App\Repositories\TransactionRepositoryInterface;
 
-class UpdateTransactionsUseCase
+class UpdateTransactionUseCase
 {
     private $transactionRepository;
 
@@ -14,10 +13,12 @@ class UpdateTransactionsUseCase
         $this->transactionRepository = $transactionRepository;
     }
 
-    public function execute(Request $request, array $id)
+    public function execute(array $data)
     {
-        return $this->transactionRepository->update($request,$id);
+        $results = [];
+        foreach ($data as $transaction) {
+            $results[] = $this->transactionRepository->update($transaction);
+        }
+        return $results;
     }
 }
-    /
-

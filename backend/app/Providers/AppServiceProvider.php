@@ -7,6 +7,7 @@ use App\Repositories\TransactionRepositoryInterface;
 use App\UseCase\Transaction\GetTransactionsUseCase;
 use App\UseCase\Transaction\CreateTransactionUseCase;
 use App\UseCase\Transaction\ShowTransactionUseCase;
+use App\UseCase\Transaction\UpdateTransactionUseCase;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -36,6 +37,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ShowTransactionUseCase::class,
             function($app) {
                 return new ShowTransactionUseCase($app->make(TransactionRepositoryInterface::class));
+            }
+        );
+
+        $this->app->bind(UpdateTransactionUseCase::class,
+            function($app) {
+                return new UpdateTransactionUseCase($app->make(TransactionRepositoryInterface::class));
             }
         );
     }

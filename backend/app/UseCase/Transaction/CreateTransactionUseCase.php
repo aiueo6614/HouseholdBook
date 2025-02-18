@@ -5,7 +5,7 @@ namespace App\UseCase\Transaction;
 use App\Repositories\TransactionRepositoryInterface;
 use App\Models\Transaction;
 
-class CreateTransactionUsecase
+class CreateTransactionUseCase
 {
     private $transactionRepository;
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionRequest;
 use App\UseCase\Transaction\GetTransactionsUseCase;
-use App\UseCase\Transaction\CreateTransactionUsecase;
+use App\UseCase\Transaction\CreateTransactionUseCase;
 use App\UseCase\Transaction\ShowTransactionUseCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,9 +17,9 @@ class TransactionController extends Controller
     private $showTransactionUseCase;
 
     public function __construct(
-        GetTransactionsUseCase $getTransactionsUseCase,
-        CreateTransactionUsecase $createTransactionUseCase,
-        ShowTransactionUseCase $showTransactionUseCase,
+        GetTransactionsUseCase   $getTransactionsUseCase,
+        CreateTransactionUseCase $createTransactionUseCase,
+        ShowTransactionUseCase   $showTransactionUseCase,
     )
     {
         $this->getTransactionsUseCase = $getTransactionsUseCase;

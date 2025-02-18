@@ -13,10 +13,10 @@ class UpdateTransactionUseCase
         $this->transactionRepository = $transactionRepository;
     }
 
-    public function execute(array $data)
+    public function execute(array $transactions)
     {
         $results = [];
-        foreach ($data as $transaction) {
+        foreach ($transactions as $transaction) {
             $results[] = $this->transactionRepository->update($transaction);
         }
         return $results;

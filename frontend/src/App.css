@@ -78,3 +78,8 @@ div.NextMonth::before {
     background-color: white;
 }
 
+.calendar {
+    width: 80%;
+    margin: 0 auto;
+    
+}

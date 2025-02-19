@@ -42,7 +42,7 @@ class TransactionController extends Controller
     public function index(): JsonResponse
     {
         $transactions = $this->getTransactionsUseCase->execute();
-        return new JsonResponse($transactions);
+        return new JsonResponse($transactions, 200);
     }
 
     /**

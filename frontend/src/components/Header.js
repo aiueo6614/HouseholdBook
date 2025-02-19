@@ -1,11 +1,15 @@
 import React from 'react';
 import styles from './Header.css';
 
-const Header = () => {
+const Header = ({ setNowOpenCalendar }) => {
+    const handleMonthChange = (event) => {
+        setNowOpenCalendar(Number(event.target.value));
+    };
+
     return (
         <div className="header">
             <button><a href="">ホーム</a></button>
-            <select name="月選択" className="month">
+            <select name="月選択" className="month" onChange={handleMonthChange}>
                 <option value="0">月選択</option>
                 <option value="1">1月</option>
                 <option value="2">2月</option>

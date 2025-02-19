@@ -53,7 +53,7 @@ function Home() {
 
     return (
         <div>
-            <Header/>
+            <Header　setNowOpenCalendar={setNowOpenCalendar}/>
             <button className={"save"}>保存</button>
             <div className={"SecondaryHeader"}>
                 <div className={"PreviousMonth"} onClick={mentCalendar}></div>
@@ -73,6 +73,7 @@ function Home() {
                         right: '',
                         left: ''
                     }}
+                    fixedWeekCount={false}
                 />
                 <button onClick={sendData}>データ送信</button>
                 <button onClick={getData}>取得データ表示</button>

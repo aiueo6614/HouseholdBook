@@ -48,9 +48,9 @@ class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TransactionRequest $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
-        $transaction = $this->createTransactionUseCase->execute($request->validated());
+        $transaction = $this->createTransactionUseCase->execute($request->all());
         return new JsonResponse($transaction, 201);
     }
 

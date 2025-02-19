@@ -14,8 +14,12 @@ class CreateTransactionUseCase
         $this->transactionRepository = $transactionRepository;
     }
 
-    public function execute(array $date): Transaction
+    public function execute(array $transactions)
     {
-        return $this->transactionRepository->create($date);
+        $results = [];
+        foreach ($transactions as $transaction) {
+            $results[] = $this->transactionRepository->create($transaction);
+        }
+        return $results;
     }
 }

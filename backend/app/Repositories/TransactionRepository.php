@@ -15,4 +15,19 @@ class TransactionRepository implements TransactionRepositoryInterface
     {
         return Transaction::create($data);
     }
+
+    public function find(int $id): Transaction
+    {
+        return Transaction::find($id);
+    }
+
+    public function update(array $data): Transaction
+    {
+        return tap(Transaction::find($data['id']))->update($data);
+    }
+
+    public function delete(int $id): void
+    {
+        Transaction::destroy($id);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Services;
 use Google\Client;
 use Google\Service\Drive;
 use Google\Service\Drive\DriveFile;
+use Illuminate\Support\Facades\Log;
 
 class GoogleDriveService
 {
@@ -57,12 +58,13 @@ class GoogleDriveService
         return $content;
     }
 
-    public function extractProductAndPrice($content)
+   public function extractProductAndPrice($content)
     {
         $prices = [];
         $products = [];
 
-        $lines = explode("\n", $content);
+        $lines = explode("\r\n", $content);
+        $lines = array_slice($lines, 2);
         foreach ($lines as $line) {
             $tokens = explode(' ', $line);
 
@@ -79,7 +81,9 @@ class GoogleDriveService
                 }
             }
 
-            $products[] = substr($product, 0, -1);
+            if (!$product == '') {
+                $products[] = substr($product, 0, -1);
+            }
         }
 
         $results = [

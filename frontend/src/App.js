@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -10,13 +9,13 @@ import './App.css';
 import Header from "./components/Header";
 import Camera from "./components/Camera";
 
-function Home() {
+function App() {
     const [transactions, setTransactions] = useState([]);
     const [events, setEvents] = useState([]);
+    const [showOverlay, setShowOverlay] = useState(false);
     const currentMonth = new Date().getMonth() + 1;
     const [nowOpenCalendar, setNowOpenCalendar] = useState(currentMonth);
     const calendarRef = useRef(null);
-    const navigate = useNavigate();
 
     const incrementCalendar = () => {
         setNowOpenCalendar(prev => (prev >= 12 ? 1 : prev + 1));
@@ -119,26 +118,19 @@ function Home() {
                     </ul>
                 </div>
             </div>
+
+            <button className="camera-button" onClick={() => setShowOverlay(true)}>カメラ</button>
+
+            {showOverlay && (
+                <div className="overlay" onClick={() => setShowOverlay(false)}>
+                    <div className="overlay-box">カメラオーバーレイ</div>
+                </div>
+            )}
+
             <div className="cameraButton">
-                <button onClick={() => navigate("/camera")}>
-                    カメラを開く
-                </button>
-            </div>
-            <div className="cameraButton">
-                <Camera />
+                <Camera/>
             </div>
         </div>
-    );
-}
-
-function App() {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/camera" element={<Camera />} />
-            </Routes>
-        </Router>
     );
 }
 

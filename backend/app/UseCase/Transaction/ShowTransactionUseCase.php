@@ -3,9 +3,8 @@
 namespace App\UseCase\Transaction;
 
 use App\Repositories\TransactionRepositoryInterface;
-use App\Models\Transaction;
 
-class CreateTransactionUsecase
+class  ShowTransactionUseCase
 {
     private $transactionRepository;
 
@@ -14,8 +13,9 @@ class CreateTransactionUsecase
         $this->transactionRepository = $transactionRepository;
     }
 
-    public function execute(array $date): Transaction
+    public function execute($id)
     {
-        return $this->transactionRepository->create($date);
+        return $this->transactionRepository->find($id);
     }
 }
+

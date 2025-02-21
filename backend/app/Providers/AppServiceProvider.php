@@ -5,7 +5,10 @@ namespace App\Providers;
 use App\Repositories\TransactionRepository;
 use App\Repositories\TransactionRepositoryInterface;
 use App\UseCase\Transaction\GetTransactionsUseCase;
-use App\UseCase\Transaction\CreateTransactionUsecase;
+use App\UseCase\Transaction\CreateTransactionUseCase;
+use App\UseCase\Transaction\ShowTransactionUseCase;
+use App\UseCase\Transaction\UpdateTransactionUseCase;
+use App\UseCase\Transaction\DeleteTransactionUseCase;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,9 +29,27 @@ class AppServiceProvider extends ServiceProvider
             }
         );
 
-        $this->app->bind(CreateTransactionUsecase::class,
+        $this->app->bind(CreateTransactionUseCase::class,
             function($app) {
-                return new CreateTransactionUsecase($app->make(TransactionRepositoryInterface::class));
+                return new CreateTransactionUseCase($app->make(TransactionRepositoryInterface::class));
+            }
+        );
+
+        $this->app->bind(ShowTransactionUseCase::class,
+            function($app) {
+                return new ShowTransactionUseCase($app->make(TransactionRepositoryInterface::class));
+            }
+        );
+
+        $this->app->bind(UpdateTransactionUseCase::class,
+            function($app) {
+                return new UpdateTransactionUseCase($app->make(TransactionRepositoryInterface::class));
+            }
+        );
+
+        $this->app->bind(DeleteTransactionUseCase::class,
+            function($app) {
+                return new DeleteTransactionUseCase($app->make(TransactionRepositoryInterface::class));
             }
         );
     }

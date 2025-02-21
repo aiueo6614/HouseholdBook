@@ -123,13 +123,11 @@ function App() {
 
             {showOverlay && (
                 <div className="overlay" onClick={() => setShowOverlay(false)}>
-                    <div className="overlay-box">カメラオーバーレイ</div>
+                    <div className="CameraPage" onClick={(e) => e.stopPropagation()}>
+                        <Camera/>
+                    </div>
                 </div>
             )}
-
-            <div className="cameraButton">
-                <Camera/>
-            </div>
         </div>
     );
 }

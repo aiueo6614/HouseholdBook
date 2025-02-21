@@ -83,15 +83,15 @@ div.NextMonth::before {
     margin: 0 auto;
 }
 
-.fc-daygrid-day {
-    border: 1px solid #ddd;
-    padding: 10px;
-    height: 100px;
-}
-
-.overlay-box {
-    width: 200px;
-    height: 200px;
-    background: white;
-    border: 2px solid black;
+div.CameraPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fff9ea;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1002; /* 必要に応じて調整 */
 }

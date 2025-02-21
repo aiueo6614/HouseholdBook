@@ -79,22 +79,19 @@ div.NextMonth::before {
 }
 
 .calendar {
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
-
 }
 
-#external-events {
-    padding: 10px;
-    background: #f8f8f8;
+.fc-daygrid-day {
     border: 1px solid #ddd;
-    margin-bottom: 10px;
+    padding: 10px;
+    height: 100px;
 }
-.draggable-event {
-    padding: 5px;
-    background: #007bff;
-    color: white;
-    margin: 5px 0;
-    cursor: grab;
-    border-radius: 5px;
+
+.overlay-box {
+    width: 200px;
+    height: 200px;
+    background: white;
+    border: 2px solid black;
 }

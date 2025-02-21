@@ -1,8 +1,6 @@
 import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const CameraScreen = () => {
-    const navigate = useNavigate();
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const [photo, setPhoto] = useState("");
@@ -56,7 +54,6 @@ const CameraScreen = () => {
                 <button onClick={stopCamera}>終了</button>
             </div>
             {photo && <img src={photo} alt="撮影した写真" style={{ maxWidth: "100%" }} />}
-            <button onClick={() => navigate("/")}>戻る</button>
         </div>
     );
 };

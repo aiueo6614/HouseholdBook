@@ -1,11 +1,10 @@
 import React, { useRef, useState } from "react";
 
-const CameraScreen = () => {
+const CameraScreen = ({ onClose }) => {  // onClose を受け取る
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const [photo, setPhoto] = useState("");
 
-    // カメラを開始する関数
     const startCamera = async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({
@@ -21,7 +20,6 @@ const CameraScreen = () => {
         }
     };
 
-    // 写真を撮る関数
     const takePhoto = () => {
         const video = videoRef.current;
         const canvas = canvasRef.current;
@@ -34,13 +32,13 @@ const CameraScreen = () => {
         }
     };
 
-    // カメラを停止する関数
     const stopCamera = () => {
         const video = videoRef.current;
         if (video && video.srcObject) {
             video.srcObject.getTracks().forEach(track => track.stop());
             video.srcObject = null;
         }
+        onClose(); // オーバーレイを閉じる
     };
 
     return (

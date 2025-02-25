@@ -36,6 +36,8 @@ return [
         'client_email' => env('GOOGLE_CLIENT_EMAIL'),
         'private_key' => env('GOOGLE_PRIVATE_KEY'),
         'drive_id' => env('GOOGLE_DRIVE_ID'),
+
+        'gemini_api_key' => env('GEMINI_API_KEY'),
     ],
 
 ];

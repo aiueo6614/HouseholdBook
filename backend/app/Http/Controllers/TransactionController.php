@@ -50,7 +50,7 @@ class TransactionController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $transaction = $this->createTransactionUseCase->execute($request->all());
+        $transaction = $this->createTransactionUseCase->execute($request->input('transactions'));
         return new JsonResponse($transaction, 201);
     }
 
@@ -68,7 +68,7 @@ class TransactionController extends Controller
      */
     public function update(Request $request): JsonResponse
     {
-        $transactions = $this->updateTransactionUseCase->execute($request->all());
+        $transactions = $this->updateTransactionUseCase->execute($request->input('transactions'));
         return new JsonResponse($transactions, 200);
     }
 

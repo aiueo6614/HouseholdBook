@@ -42,7 +42,7 @@ class TransactionController extends Controller
     public function index(): JsonResponse
     {
         $transactions = $this->getTransactionsUseCase->execute();
-        return new JsonResponse($transactions, 200);
+        return new JsonResponse(['results' => $transactions], 200);
     }
 
     /**
@@ -51,7 +51,7 @@ class TransactionController extends Controller
     public function store(Request $request): JsonResponse
     {
         $transaction = $this->createTransactionUseCase->execute($request->input('transactions'));
-        return new JsonResponse($transaction, 201);
+        return new JsonResponse(['results' => $transaction], 201);
     }
 
     /**
@@ -69,7 +69,7 @@ class TransactionController extends Controller
     public function update(Request $request): JsonResponse
     {
         $transactions = $this->updateTransactionUseCase->execute($request->input('transactions'));
-        return new JsonResponse($transactions, 200);
+        return new JsonResponse(['results' => $transactions], 200);
     }
 
     /**
@@ -78,6 +78,6 @@ class TransactionController extends Controller
     public function delete(Request $request): JsonResponse
     {
         $transactions = $this->deleteTransactionUseCase->execute($request->input('transactions'));
-        return new JsonResponse($transactions, 200);
+        return new JsonResponse(['results' => $transactions], 200);
     }
 }

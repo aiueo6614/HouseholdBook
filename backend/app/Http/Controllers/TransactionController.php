@@ -75,9 +75,9 @@ class TransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function delete($id): JsonResponse
+    public function delete(Request $request): JsonResponse
     {
-        $this->deleteTransactionUseCase->execute($id);
-        return new JsonResponse(null, 204);
+        $transactions = $this->deleteTransactionUseCase->execute($request->input('transactions'));
+        return new JsonResponse($transactions, 200);
     }
 }

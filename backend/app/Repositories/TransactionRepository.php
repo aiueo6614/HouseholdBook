@@ -26,8 +26,8 @@ class TransactionRepository implements TransactionRepositoryInterface
         return tap(Transaction::find($data['id']))->update($data);
     }
 
-    public function delete(int $id): void
+    public function delete(array $data): Transaction
     {
-        Transaction::destroy($id);
+        return tap(Transaction::find($data['id']))->delete();
     }
 }

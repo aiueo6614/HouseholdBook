@@ -12,17 +12,17 @@ class GeminiService
 
     public function __construct()
     {
-        $this->apiKey = config('services.gemini.api_key');
+        $this->apiKey = config('services.google.gemini_api_key');
         $this->client = new Client();
     }
 
     public function gemini($image)
     {
-        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' . $this->apiKey;
+        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=' . $this->apiKey;
         $json = json_encode([
             'system_instruction' => [
                 'parts' => [
-                    'text' => 'レシートの写真から商品名と金額をMD無しで以下のJSON形式で返答{"results":[{"product":str,"amount":int},{"product":str,"amount":int},...]}'
+                    'text' => 'マークダウン（コードブロック）は絶対に使用せず、テキストのみ出力してください。レシートの写真から商品名と金額を以下のJSON形式で返答。{"results":[{"product":str,"amount":int},{"product":str,"amount":int},...]}'
                 ]
             ],
             'contents' => [
@@ -45,8 +45,8 @@ class GeminiService
             'body' => $json
         ]);
 
-        Log::debug('Gemini response >' . $geminiResponse->getBody());
+        $geminiBody = json_decode($geminiResponse->getBody(), true);
 
-        return json_decode($geminiResponse->getBody(), true);
+        return $geminiBody['candidates'][0]['content']['parts'][0]['text'];
     }
 }

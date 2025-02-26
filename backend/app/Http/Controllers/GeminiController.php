@@ -17,8 +17,7 @@ class GeminiController
 
     public function ocr(Request $request): JsonResponse
     {
-        $image = $request->getContent();
-        $result = $this->geminiService->gemini($image);
+        $result = $this->geminiService->gemini($request->getContent());
 
         return new JsonResponse($result, 200);
     }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import {getTransactions,createTransaction,updateTransaction,deleteTransaction} from "./API/API";
+import {deleteTransaction} from "./API/API";
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
@@ -11,7 +11,7 @@ import Header from "./components/Header";
 import Camera from "./components/Camera";
 
 function App() {
-    //const [transactions, setTransactions] = useState([]); //リストの状態
+    const [transactions, setTransactions] = useState([]); //リストの状態
 
     const [events, setEvents] = useState([]);
     const [showOverlay, setShowOverlay] = useState(false);
@@ -61,17 +61,16 @@ function App() {
     };
 
 
-    const handleCreateTransaction = async () => {
-        const newTransaction = { amount: 1000, description: 'Test Transaction' };
-        const data = await createTransaction(newTransaction);
-        console.log('Created:', data);
-    };
+
+
+
+    //トランザクション削除
     const handleDeleteTransaction = async () => {
         await deleteTransaction('2');
         console.log('Deleted transaction with ID:', 2);
     };
 
-    {/*
+
     const sendData = () => {
         axios.post('http://localhost:8001/api/transactions', {
             date: '2025-01-21',
@@ -89,7 +88,6 @@ function App() {
             })
             .catch(error => console.log(error));
     };
-    */}
 
     return (
         <div>
@@ -122,9 +120,9 @@ function App() {
             </div>
 
 
-            <button onClick={handleCreateTransaction}>データ送信</button>
+            <button onClick={sendData}>送信</button>
             <button onClick={handleDeleteTransaction}>Delete Transaction</button>
-            {/*
+
                 <button onClick={getData}>取得データ表示</button>
                 <div>
                     <h2>取得したデータ</h2>
@@ -134,7 +132,7 @@ function App() {
                         ))}
                     </ul>
                 </div>
-                */}
+
 
             <button className="camera-button" onClick={() => setShowOverlay(true)}>カメラ</button>
             {showOverlay && (

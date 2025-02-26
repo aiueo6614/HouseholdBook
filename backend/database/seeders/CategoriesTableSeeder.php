@@ -17,11 +17,11 @@ class CategoriesTableSeeder extends Seeder
             '固定費',
             '変動費',
             '食費',
-            'その他',
+            'その他(支出)',
         ];
         $incomes = [
             '収入',
-            'その他',
+            'その他(収益)',
         ];
 
         foreach ($expenses as $expense) {

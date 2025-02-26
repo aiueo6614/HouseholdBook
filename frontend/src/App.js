@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import {getTransactions} from "./API/API";
+import {getTransactions,createTransaction,updateTransaction,deleteTransaction} from "./API/API";
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
@@ -11,7 +11,8 @@ import Header from "./components/Header";
 import Camera from "./components/Camera";
 
 function App() {
-    const [transactions, setTransactions] = useState([]);
+    //const [transactions, setTransactions] = useState([]); //リストの状態
+
     const [events, setEvents] = useState([]);
     const [showOverlay, setShowOverlay] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -60,6 +61,16 @@ function App() {
     };
 
 
+    const handleCreateTransaction = async () => {
+        const newTransaction = { amount: 1000, description: 'Test Transaction' };
+        const data = await createTransaction(newTransaction);
+        console.log('Created:', data);
+    };
+    const handleDeleteTransaction = async () => {
+        await deleteTransaction('2');
+        console.log('Deleted transaction with ID:', 2);
+    };
+
     {/*
     const sendData = () => {
         axios.post('http://localhost:8001/api/transactions', {
@@ -79,30 +90,6 @@ function App() {
             .catch(error => console.log(error));
     };
     */}
-    const TransactionsList = () => {
-        const [transactions, setTransactions] = useState([]);
-        const [loading, setLoading] = useState(true);
-
-        useEffect(() => {
-            const fetchTransactions = async () => {
-                try {
-                    const data = await getTransactions();
-                    setTransactions(data);  // データをstateにセット
-                } catch (error) {
-                    console.error('Error fetching transactions:', error);
-                } finally {
-                    setLoading(false);  // ローディング状態を解除
-                }
-            };
-
-            fetchTransactions();
-        }, []);  // コンポーネントがマウントされた時に一度だけ実行
-
-        if (loading) {
-            return <div>Loading...</div>;
-        }
-        }
-
 
     return (
         <div>
@@ -134,8 +121,10 @@ function App() {
                 />
             </div>
 
+
+            <button onClick={handleCreateTransaction}>データ送信</button>
+            <button onClick={handleDeleteTransaction}>Delete Transaction</button>
             {/*
-                <button onClick={sendData}>データ送信</button>
                 <button onClick={getData}>取得データ表示</button>
                 <div>
                     <h2>取得したデータ</h2>
@@ -146,17 +135,6 @@ function App() {
                     </ul>
                 </div>
                 */}
-
-            <div>
-                <h1>Transactions</h1>
-                <ul>
-                    {transactions.map((transaction) => (
-                        <li key={transaction.id}>
-                            {transaction.name} - {transaction.amount}
-                        </li>
-                    ))}
-                </ul>
-            </div>
 
             <button className="camera-button" onClick={() => setShowOverlay(true)}>カメラ</button>
             {showOverlay && (

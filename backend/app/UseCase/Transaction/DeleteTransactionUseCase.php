@@ -13,8 +13,12 @@ class DeleteTransactionUseCase
         $this->transactionRepository = $transactionRepository;
     }
 
-    public function execute(int $id)
+    public function execute(array $transactions)
     {
-        $this->transactionRepository->delete($id);
+        $results = [];
+        foreach ($transactions as $transaction) {
+            $results[] = $this->transactionRepository->delete($transaction);
+        }
+        return $results;
     }
 }

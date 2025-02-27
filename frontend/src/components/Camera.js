@@ -35,6 +35,16 @@ const CameraScreen = ({ onClose }) => {  // onClose を受け取る
     };
 
     const readReceipt = () => {
+        axios.post('http://localhost:8001/api/ocr/gemini',
+            { image: photo }).then(
+                (response) => {
+                    console.log(response.data);
+                }
+            ).catch(
+                (error) => {
+                    console.error("OCRに失敗しました。", error);
+                }
+            );
         const video = videoRef.current;
         if (video && video.srcObject) {
             video.srcObject.getTracks().forEach(track => track.stop());

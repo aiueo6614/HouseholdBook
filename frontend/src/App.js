@@ -72,12 +72,13 @@ function App() {
 
 
     const sendData = () => {
-        axios.post('http://localhost:8001/api/transactions', {
-            date: '2025-01-21',
-            category: '食費',
-            description: 'puttyo',
-            amount: 150
-        })
+        axios.post('http://localhost:8001/api/transactions',
+            {transactions: [
+                { date: "2025-02-25", category: "食費", description: "smile", amount: 0 },
+                { date: "2025-02-25", category: "食費", description: "insert me please", amount: 0 },
+            ],
+        },
+            )
             .then(response => console.log(response))
             .catch(error => console.log(error));
     };

@@ -18,7 +18,7 @@ const CameraScreen = ({ onClose }) => {  // onClose を受け取る
                 videoRef.current.play();
             }
         } catch (error) {
-            console.error("カメラに接続できません。", error);
+            console.error("カメラに接続できませでした", error);
         }
     };
 

@@ -1,4 +1,6 @@
 import React, { useRef, useState } from "react";
+import "./Camera.css";
+import axios from "axios";
 
 const CameraScreen = ({ onClose }) => {  // onClose を受け取る
     const videoRef = useRef(null);
@@ -32,7 +34,7 @@ const CameraScreen = ({ onClose }) => {  // onClose を受け取る
         }
     };
 
-    const stopCamera = () => {
+    const readReceipt = () => {
         const video = videoRef.current;
         if (video && video.srcObject) {
             video.srcObject.getTracks().forEach(track => track.stop());
@@ -49,7 +51,7 @@ const CameraScreen = ({ onClose }) => {  // onClose を受け取る
             <div>
                 <button onClick={startCamera}>カメラを開始</button>
                 <button onClick={takePhoto}>写真を撮る！</button>
-                <button onClick={stopCamera}>終了</button>
+                <button onClick={readReceipt}>送信</button>
             </div>
             {photo && <img src={photo} alt="撮影した写真" style={{ maxWidth: "100%" }} />}
         </div>

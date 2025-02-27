@@ -50,7 +50,7 @@ function App() {
                 id: String(events.length + 1),
                 title: `${selectedOption}, ${input1}, ${input2}円`,
                 start: selectedDate,
-                end: selectedDate,
+                //end: selectedDate,
             };
             setEvents([...events, newEvent]);
             setShowModal(false);
@@ -66,11 +66,15 @@ function App() {
 
     //トランザクション削除
     const handleDeleteTransaction = async () => {
-        await deleteTransaction('2');
-        console.log('Deleted transaction with ID:', 2);
+        try {
+            await axios.delete('http://localhost:8001/api/transactions');
+            await deleteTransaction('17');
+        } catch (error) {
+            console.error('Error deleting transaction:', error);
+        }
     };
 
-
+    //トランザクション送信
     const sendData = () => {
         axios.post('http://localhost:8001/api/transactions',
             {transactions: [
@@ -82,12 +86,19 @@ function App() {
             .then(response => console.log(response))
             .catch(error => console.log(error));
     };
+    //トランザクション入手
     const getData = () => {
         axios.get('http://localhost:8001/api/transactions')
             .then(response => {
-                setTransactions(response.data); // 取得したデータを state に保存
+                if (response.data && Array.isArray(response.data.results)) {
+                    setTransactions(response.data.results); // `results` 配列を state にセット
+                } else {
+                    console.error("Unexpected response format:", response.data);
+                }
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                console.error("Error fetching data:", error.response ? error.response.data : error.message);
+            });
     };
 
     return (

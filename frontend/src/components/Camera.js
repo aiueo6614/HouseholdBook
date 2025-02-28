@@ -1,8 +1,7 @@
 import React, { useRef, useState } from "react";
-import "./Camera.css";
 import axios from "axios";
 
-const CameraScreen = ({ onClose }) => {  // onClose を受け取る
+const CameraScreen = ({ onClose }) => {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const [photo, setPhoto] = useState("");
@@ -30,27 +29,50 @@ const CameraScreen = ({ onClose }) => {  // onClose を受け取る
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            setPhoto(canvas.toDataURL("image/png"));
+            const imageData = canvas.toDataURL("image/jpeg");
+            setPhoto(imageData);
         }
     };
 
-    const readReceipt = () => {
-        axios.post('http://localhost:8001/api/ocr/gemini',
-            { image: photo }).then(
-            (response) => {
-                console.log(response.data);
+    const sendImage = async () => {
+        if (!photo) {
+            console.error("画像が撮影されていません。");
+            return;
+        }
+
+        try {
+            // 画像データをfetchで取得し、Blobとして変換
+            const blob = await (await fetch(photo)).blob();
+
+            // バイナリデータをそのまま送信する形式に修正
+            const response = await axios.post("http://localhost:8001/api/ocr/gemini/", blob, {
+                headers: {
+                    "Content-Type": "image/jpeg",
+                },
+            });
+
+            console.log("サーバーの応答:", response.data);
+        } catch (error) {
+            if (error.response) {
+                // エラーメッセージを詳細に表示
+                console.error("サーバーからのエラー:", error.response.data);
+                console.error("ステータスコード:", error.response.status);
+                console.error("ヘッダ情報:", error.response.headers);
+            } else if (error.request) {
+                console.error("リクエストエラー:", error.request);
+            } else {
+                console.error("エラー:", error.message);
             }
-        ).catch(
-            (error) => {
-                console.error("OCRに失敗しました。", error);
-            }
-        );
+        }
+    };
+
+    const stopCamera = () => {
         const video = videoRef.current;
         if (video && video.srcObject) {
             video.srcObject.getTracks().forEach(track => track.stop());
             video.srcObject = null;
         }
-        onClose(); // オーバーレイを閉じる
+        onClose();
     };
 
     return (
@@ -61,7 +83,8 @@ const CameraScreen = ({ onClose }) => {  // onClose を受け取る
             <div>
                 <button onClick={startCamera}>カメラを開始</button>
                 <button onClick={takePhoto}>写真を撮る！</button>
-                <button onClick={readReceipt}>送信</button>
+                <button onClick={sendImage}>送信</button> {/* 画像を送信するボタン */}
+                <button onClick={stopCamera}>終了</button>
             </div>
             {photo && <img src={photo} alt="撮影した写真" style={{ maxWidth: "100%" }} />}
         </div>

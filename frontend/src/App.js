@@ -154,6 +154,25 @@ function App() {
   }, []);
 
 
+
+
+    const handleDeleteAllTransactions = async () => {
+        try {
+            const idsToDelete = transactions.map(tx => ({ id: tx.id }));
+            await axios.delete('http://localhost:8001/api/transactions', {
+                headers: { "Content-Type": "application/json" },
+                data: { transactions: idsToDelete }
+            });
+            setTransactions([]);
+            setEvents([]);
+            console.log("All transactions deleted successfully");
+        } catch (error) {
+            console.error('Error deleting all transactions:', error.response ? error.response.data : error.message);
+        }
+    };
+
+
+
   return (
       <div>
         <Header setNowOpenCalendar={(newMonth) => {
@@ -162,7 +181,7 @@ function App() {
             calendarRef.current.getApi().gotoDate(`2025-${String(newMonth).padStart(2, '0')}-01`);
           }
         }} />
-        <button className="save">保存</button>
+        <button onClick={sendData} className="save">保存</button>
         <div className="SecondaryHeader">
           <div className="PreviousMonth" onClick={decreaseCalendar}></div>
           <div className="CalendarValue">{nowOpenCalendar}月</div>
@@ -190,7 +209,7 @@ function App() {
         </div>
 
 
-        <button onClick={sendData}>送信</button>
+
         <button onClick={handleDeleteTransaction}>Delete Transaction</button>
 
         <div>
@@ -212,19 +231,24 @@ function App() {
             </div>
         )}
 
-        <div className={"allDelete"}>
-
-        </div>
-        {showModal && (
-            <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className={"allDelete"}>
+              <button onClick={handleDeleteAllTransactions} className="allDelete">全削除</button>
+          </div>
+          {showModal && (
+              <div className="modal-overlay" onClick={() => setShowModal(false)}>
               <div className="modal" onClick={(e) => e.stopPropagation()}>
                 <h2>イベントを追加</h2>
-                <select value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
-                  <option value="">勘定科目を選択</option>
-                  <option value="食費">食費</option>
+                  <select value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
+                      <option value="">勘定科目を選択</option>
+                      <option value="食費">食費</option>
+                      <option value="固定費">固定費</option>
+                      <option value="変動費">変動費</option>
+                      <option value="その他費用">その他費用</option>
+                      <option value="収入">収入</option>
+                      <option value="その他収益">その他収益</option>
 
-                </select>
-                <input type="text" placeholder="商品名" value={input1}
+                  </select>
+                  <input type="text" placeholder="商品名" value={input1}
                        onChange={(e) => setInput1(e.target.value)}/>
                 <input type="text" placeholder="値段" value={input2}
                        onChange={(e) => setInput2(e.target.value)}/>

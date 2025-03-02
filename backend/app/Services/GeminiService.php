@@ -18,11 +18,11 @@ class GeminiService
 
     public function gemini($image)
     {
-        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=' . $this->apiKey;
+        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' . $this->apiKey;
         $json = json_encode([
             'system_instruction' => [
                 'parts' => [
-                    'text' => 'マークダウン（コードブロック）は絶対に使用せず、テキストのみ出力してください。レシートの写真から商品名と金額を以下のJSON形式で返答。{"results":[{"product":str,"amount":int},{"product":str,"amount":int},...]}'
+                    'text' => 'レシートの写真から商品名と金額を以下のJSON形式で返答。{"results":[{"product":str,"amount":int},{"product":str,"amount":int},...]}'
                 ]
             ],
             'contents' => [
@@ -47,6 +47,11 @@ class GeminiService
 
         $geminiBody = json_decode($geminiResponse->getBody(), true);
 
-        return $geminiBody['candidates'][0]['content']['parts'][0]['text'];
+        $geminiText = $geminiBody['candidates'][0]['content']['parts'][0]['text'];
+        $geminiText = str_replace('JSON', '', $geminiText);
+        $geminiText = str_replace('json', '', $geminiText);
+        $geminiText = str_replace('```', '', $geminiText);
+
+        return $geminiText;
     }
 }

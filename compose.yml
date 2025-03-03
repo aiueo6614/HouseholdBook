@@ -34,3 +34,5 @@ services:
       MYSQL_PASSWORD: docker
       MYSQL_ROOT_PASSWORD: root
       TZ: "Asia/Tokyo"
+    ports:
+        - "3306:3306"
